@@ -34,6 +34,15 @@ const CoinSelector = ({ coin, setCoin }) => {
         console.log("Selected: ", selected);
     }, [selected])
 
+    // using for loop for better speed than map, b/c so many coins...
+    const options = (searchResults) => {
+        let options = [];
+        for (let i = 0; i < searchResults.length; i++) {
+            options.push(<option value={JSON.stringify(searchResults[i])}>{searchResults[i].name}</option>)
+        }
+        return options;
+    }
+
     return (
         <div className="coin-selector">
 
@@ -41,9 +50,10 @@ const CoinSelector = ({ coin, setCoin }) => {
 
             <form id="coinselector" onSubmit={handleSubmit} ><button type="submit" >Select</button></form>
             <select form="coinselector" value={selected} onChange={handleSelection}>
-                {searchResults.map(result => (
+                {options(searchResults)}
+                {/*searchResults.map(result => (
                     <option value={JSON.stringify(result)}>{result.name}</option>
-                ))}
+                ))*/}
             </select>
 
         </div>
